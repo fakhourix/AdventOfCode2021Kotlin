@@ -1,0 +1,10 @@
+/build.gradle.kts
+/gradle.properties
+/gradlew
+/gradlew.bat
+/settings.gradle.kts
+/.idea/
+/gradle/
+/.gradle/
+/build/
+/src/main/kotlin/Root.kt
