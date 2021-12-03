@@ -43,34 +43,12 @@ class Puzzle3 : PuzzleTemplate(
         answer(oxygenReport.first().toDecimal() * scrubberReport.first().toDecimal())
     }
 
-    private fun getBitsCountInColumn(report: List<String>, row: Int): BitsCount {
-        val rows = report.size
+    private fun getBitsCountInColumn(report: List<String>, col: Int): BitsCount {
         val bitsCount = BitsCount.init()
-        for (i in 0 until rows) {
-            if (report[i][row] == BitOne) bitsCount.ones.inc() else bitsCount.zeros.inc()
+        report.forEach {
+            if (it[col] == BitOne) bitsCount.ones.inc() else bitsCount.zeros.inc()
         }
         return bitsCount
-    }
-
-    private fun puzzleOneTransposeSolution(): Int {
-        // Use matrix transpose
-        val m = inputAsStrings.size
-        val n = inputAsStrings[0].length
-        val transposedInput = Array(n) { CharArray(m) }
-        for (x in 0 until n) {
-            for (y in 0 until m) {
-                transposedInput[x][y] = inputAsStrings[y][x]
-            }
-        }
-        var gamma = ""
-        var alfa = ""
-        transposedInput.forEach { row ->
-            val ones = row.filter { it == BitOne }.size
-            val zeros = row.size - ones
-            gamma += if (ones > zeros) BitOne else BitZero
-            alfa += if (ones > zeros) BitZero else BitOne
-        }
-        return gamma.toDecimal() * alfa.toDecimal()
     }
 }
 
