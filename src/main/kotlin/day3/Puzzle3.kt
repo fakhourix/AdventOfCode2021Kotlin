@@ -1,0 +1,101 @@
+package day3
+
+import PuzzleTemplate
+
+class Puzzle3 : PuzzleTemplate(
+    day = 3,
+    inputPath = "${Root.Dir}\\day3\\input"
+) {
+
+    override fun puzzleOne(answer: Int?.() -> Unit) {
+        val cols = inputAsStrings[0].length
+        var gamma = ""
+        var alfa = ""
+        for (col in 0 until cols) {
+            val bitsCount = getBitsCountInColumn(inputAsStrings, col)
+            val hasMoreOnes = bitsCount.ones.count > bitsCount.zeros.count
+            gamma += if (hasMoreOnes) BitOne else BitZero
+            alfa += if (hasMoreOnes) BitZero else BitOne
+        }
+        answer(gamma.toDecimal() * alfa.toDecimal())
+    }
+
+    override fun puzzleTwo(answer: Int?.() -> Unit) {
+        var oxygenReport = inputAsStrings.toMutableList()
+        var scrubberReport = inputAsStrings.toMutableList()
+
+        var row = 0
+        while (oxygenReport.size > 1) {
+            val bitsCount = getBitsCountInColumn(oxygenReport, row)
+            val bitCriteria = if (bitsCount.ones.count >= bitsCount.zeros.count) BitOne else BitZero
+            oxygenReport.removeAll { it[row] != bitCriteria }
+            row++
+        }
+
+        row = 0
+        while (scrubberReport.size > 1) {
+            val bitsCount = getBitsCountInColumn(scrubberReport, row)
+            val bitCriteria = if (bitsCount.ones.count >= bitsCount.zeros.count) BitZero else BitOne
+            scrubberReport.removeAll { it[row] != bitCriteria }
+            row++
+        }
+
+        answer(oxygenReport.first().toDecimal() * scrubberReport.first().toDecimal())
+    }
+
+    private fun getBitsCountInColumn(report: List<String>, row: Int): BitsCount {
+        val rows = report.size
+        val bitsCount = BitsCount.init()
+        for (i in 0 until rows) {
+            if (report[i][row] == BitOne) bitsCount.ones.inc() else bitsCount.zeros.inc()
+        }
+        return bitsCount
+    }
+
+    private fun puzzleOneTransposeSolution(): Int {
+        // Use matrix transpose
+        val m = inputAsStrings.size
+        val n = inputAsStrings[0].length
+        val transposedInput = Array(n) { CharArray(m) }
+        for (x in 0 until n) {
+            for (y in 0 until m) {
+                transposedInput[x][y] = inputAsStrings[y][x]
+            }
+        }
+        var gamma = ""
+        var alfa = ""
+        transposedInput.forEach { row ->
+            val ones = row.filter { it == BitOne }.size
+            val zeros = row.size - ones
+            gamma += if (ones > zeros) BitOne else BitZero
+            alfa += if (ones > zeros) BitZero else BitOne
+        }
+        return gamma.toDecimal() * alfa.toDecimal()
+    }
+}
+
+private const val BitOne = '1'
+private const val BitZero = '0'
+
+private data class BitCount(
+    val bit: Char,
+    var count: Int = 0
+) {
+    fun inc() {
+        count += 1
+    }
+}
+
+private data class BitsCount(
+    val ones: BitCount,
+    val zeros: BitCount,
+) {
+    companion object {
+        fun init() = BitsCount(
+            ones = BitCount(BitOne),
+            zeros = BitCount(BitZero)
+        )
+    }
+}
+
+private fun String.toDecimal() = Integer.parseInt(this, 2)

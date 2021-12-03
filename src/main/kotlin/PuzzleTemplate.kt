@@ -10,8 +10,11 @@ abstract class PuzzleTemplate(
     val inputAsStrings = File(inputPath).bufferedReader().readLines()
     val inputAsInts: List<Int> by lazy { inputAsStrings.map { it.toInt() } }
 
+    fun printInput() = inputAsStrings.forEach { println(it) }
+
     fun runPuzzle() {
         puzzleOne { this?.let { println("Puzzle $day.1: Answer: $this") } }
         puzzleTwo { this?.let { println("Puzzle $day.2: Answer: $this") } }
+        println("------------------------------------")
     }
 }
