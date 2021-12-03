@@ -7,26 +7,19 @@ class Puzzle1 : PuzzleTemplate(
     inputPath = "${Root.Dir}\\day1\\input"
 ) {
     override fun puzzleOne(answer: Int?.() -> Unit) {
-        answer(getNrTimesDepthIncreased(inputAsInts))
+        val nrTimesDepthIncreased = inputAsInts.windowed(2).filter { (a, b) ->
+            a < b
+        }.count()
+        answer(nrTimesDepthIncreased)
     }
 
     override fun puzzleTwo(answer: Int?.() -> Unit) {
-        val windowSize = 3
-        val sonarSweepReport = arrayListOf<Int>()
-        var index = 0
-        while (++index < inputAsInts.size - windowSize) {
-            sonarSweepReport.add(inputAsInts.subList(index, index + windowSize).sum())
-        }
-        answer(getNrTimesDepthIncreased(sonarSweepReport))
+        val nrTimesDepthIncreased = inputAsInts
+            .windowed(3)
+            .windowed(2)
+            .filter { (a, b) ->
+                a.sum() < b.sum()
+            }.count()
+        answer(nrTimesDepthIncreased)
     }
-}
-
-private fun getNrTimesDepthIncreased(list: List<Int>): Int {
-    var latest = list[0]
-    var nrTimesDepthIncreased = 0
-    list.forEach {
-        if (it > latest) nrTimesDepthIncreased++
-        latest = it
-    }
-    return nrTimesDepthIncreased
 }
