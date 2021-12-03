@@ -13,10 +13,10 @@ class Puzzle1 : PuzzleTemplate(
     override fun puzzleTwo(answer: Int?.() -> Unit) {
         val windowSize = 3
         val sonarSweepReport = arrayListOf<Int>()
-        inputAsInts.forEachIndexed { index, _ ->
-            if (index + windowSize - 1 < inputAsInts.size) {
-                sonarSweepReport.add(inputAsInts.subList(index, index + windowSize).sum())
-            }
+        var index = 0
+        while (index < inputAsInts.size - windowSize) {
+            sonarSweepReport.add(inputAsInts.subList(index, index + windowSize).sum())
+            index++
         }
         answer(getNrTimesDepthIncreased(sonarSweepReport))
     }
