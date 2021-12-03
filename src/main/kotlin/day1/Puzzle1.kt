@@ -15,8 +15,8 @@ class Puzzle1 : PuzzleTemplate(
         val sonarSweepReport = arrayListOf<Int>()
         var index = 0
         while (index < inputAsInts.size - windowSize) {
+            ++index
             sonarSweepReport.add(inputAsInts.subList(index, index + windowSize).sum())
-            index++
         }
         answer(getNrTimesDepthIncreased(sonarSweepReport))
     }
