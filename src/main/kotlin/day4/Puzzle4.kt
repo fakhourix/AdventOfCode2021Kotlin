@@ -68,12 +68,9 @@ class Puzzle4 : PuzzleTemplate(
 
 private const val BOARD_SIZE = 5
 
-class Board constructor(
-    private val n: Int,
-    private val m: Int,
-) {
+class Board constructor(private val size: Int) {
 
-    private var board = Array(n) { IntArray(m) }
+    private var board = Array(size) { IntArray(size) }
     private var lastAddedRow = 0
     var skipBoard = false
         private set
@@ -98,7 +95,7 @@ class Board constructor(
         if (board.any { it.sum() == -5 }) {
             return true
         }
-        for (col in 0 until m) {
+        for (col in 0 until size) {
             if (colAt(col).sum() == -5) {
                 return true
             }
@@ -107,7 +104,7 @@ class Board constructor(
     }
 
     private fun colAt(col: Int): IntArray {
-        var c = IntArray(m)
+        var c = IntArray(size)
         var colIndex = 0
         board.forEach { row ->
             c[colIndex++] = row[col]
