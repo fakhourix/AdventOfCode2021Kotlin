@@ -2,10 +2,7 @@ package day1
 
 import PuzzleTemplate
 
-class Puzzle1 : PuzzleTemplate(
-    day = 1,
-    inputPath = "${Root.Dir}\\day1\\input"
-) {
+class Puzzle1 : PuzzleTemplate(day = 1) {
     override fun puzzleOne(answer: Int?.() -> Unit) {
         val nrTimesDepthIncreased = inputAsInts.windowed(2).filter { (a, b) ->
             a < b

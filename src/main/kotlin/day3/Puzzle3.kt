@@ -2,10 +2,7 @@ package day3
 
 import PuzzleTemplate
 
-class Puzzle3 : PuzzleTemplate(
-    day = 3,
-    inputPath = "${Root.Dir}\\day3\\input"
-) {
+class Puzzle3 : PuzzleTemplate(day = 3) {
 
     override fun puzzleOne(answer: Int?.() -> Unit) {
         val cols = inputAsStrings[0].length

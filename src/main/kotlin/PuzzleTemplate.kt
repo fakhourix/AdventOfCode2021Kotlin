@@ -2,7 +2,7 @@ import java.io.File
 
 abstract class PuzzleTemplate(
     private val day: Int,
-    inputPath: String,
+    private val inputPath: String = "${Root.Dir}\\day${day}\\input",
 ) {
     open fun puzzleOne(answer: Int?.() -> Unit) = answer(null)
     open fun puzzleTwo(answer: Int?.() -> Unit) = answer(null)

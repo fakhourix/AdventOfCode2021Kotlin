@@ -2,10 +2,7 @@ package day2
 
 import PuzzleTemplate
 
-class Puzzle2 : PuzzleTemplate(
-    day = 2,
-    inputPath = "${Root.Dir}\\day2\\input"
-) {
+class Puzzle2 : PuzzleTemplate(day = 2) {
     override fun puzzleOne(answer: Int?.() -> Unit) {
         var horizontal = 0
         var depth = 0

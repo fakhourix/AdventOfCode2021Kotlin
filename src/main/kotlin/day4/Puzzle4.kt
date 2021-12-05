@@ -2,10 +2,7 @@ package day4
 
 import PuzzleTemplate
 
-class Puzzle4 : PuzzleTemplate(
-    day = 4,
-    inputPath = "${Root.Dir}\\day4\\input"
-) {
+class Puzzle4 : PuzzleTemplate(day = 4) {
 
     private val numbers = inputAsStrings[0].split(",").map { it.toInt() }
     private val boards = mutableListOf<Board>()
