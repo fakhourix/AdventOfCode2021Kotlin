@@ -31,8 +31,8 @@ class Puzzle4 : PuzzleTemplate(
             if (lastBoard == null) {
                 for (i in boards.indices) {
                     val board = boards[i]
-                    val boardsLeft = boards.filter { !it.skipBoard }.size
                     if (!board.skipBoard) {
+                        val boardsLeft = boards.filter { !it.skipBoard }.size
                         if (boardsLeft == 1) {
                             lastBoard = board
                             break
