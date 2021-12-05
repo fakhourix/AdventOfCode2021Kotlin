@@ -87,16 +87,16 @@ class Board constructor(private val size: Int) {
 
     fun mark(num: Int) {
         board.forEachIndexed { i, row ->
-            board[i] =  row.map { if (it == num) -1 else it }.toIntArray()
+            board[i] = row.map { if (it == num) -1 else it }.toIntArray()
         }
     }
 
     fun bingo(): Boolean {
-        if (board.any { it.sum() == -5 }) {
+        if (board.any { it.sum() == -size }) {
             return true
         }
         for (col in 0 until size) {
-            if (colAt(col).sum() == -5) {
+            if (colAt(col).sum() == -size) {
                 return true
             }
         }
