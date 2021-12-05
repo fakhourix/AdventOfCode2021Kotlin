@@ -56,7 +56,7 @@ class Puzzle4 : PuzzleTemplate(
     private fun readInBoards() {
         inputAsStrings.subList(1, inputAsStrings.size).forEach { inputLine ->
             if (inputLine.isEmpty()) {
-                boards.add(Board(BOARD_SIZE, BOARD_SIZE))
+                boards.add(Board(BOARD_SIZE))
             } else {
                 val line = inputLine.replace("  ", " ").trim()
                 boards.last().addRow(line.split(' ').mapNotNull { it.toInt() }.toIntArray())
