@@ -89,16 +89,16 @@ class Puzzle5 : PuzzleTemplate(day = 5) {
             }
             slope > 0 -> {
                 val steps = abs((p2.x - p1.x)).toInt()
-                for (i in 1..steps) {
-                    pointsInLine.add(getPoint(x1 + i, y1 + i))
+                for (step in 1..steps) {
+                    pointsInLine.add(getPoint(x1 + step, y1 + step))
                 }
             }
             slope < 0 -> {
                 val steps = abs((p2.x - p1.x)).toInt()
                 val xCoef = if (x1 < x2) 1 else -1
                 val yCoef = if (y1 > y2) -1 else 1
-                for (i in 1..steps) {
-                    pointsInLine.add(getPoint(x1 + i * xCoef, y1 + i * yCoef))
+                for (step in 1..steps) {
+                    pointsInLine.add(getPoint(x1 + step * xCoef, y1 + step * yCoef))
                 }
             }
         }
