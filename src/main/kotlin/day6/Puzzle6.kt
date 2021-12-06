@@ -25,10 +25,10 @@ class Puzzle6 : PuzzleTemplate(day = 6) {
     }
 
     private fun getFishCount(days: Int, initialState: List<Int>): Long {
-        var fishMap = initialState.groupBy { it }.mapValues { it.value.size.toLong() }
+        var fishTimerCountMap = initialState.groupBy { it }.mapValues { it.value.size.toLong() }
         for (i in 0 until days) {
             var temp = HashMap<Int, Long>()
-            fishMap.forEach { (timer, count) ->
+            fishTimerCountMap.forEach { (timer, count) ->
                 when (timer) {
                     0 -> {
                         temp[6] = temp.getOrDefault(6, 0) + count
@@ -39,9 +39,9 @@ class Puzzle6 : PuzzleTemplate(day = 6) {
                     }
                 }
             }
-            fishMap = HashMap(temp)
+            fishTimerCountMap = HashMap(temp)
         }
-        return fishMap.values.sum()
+        return fishTimerCountMap.values.sum()
     }
 
 }
