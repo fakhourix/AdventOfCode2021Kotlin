@@ -8,12 +8,7 @@ import day7.Puzzle7
 
 fun main() {
     listOf(
-        Puzzle1(),
-        Puzzle2(),
-        Puzzle3(),
-        Puzzle4(),
-        Puzzle5(),
-        Puzzle6(),
+
         Puzzle7(),
     ).forEach {
         it.runPuzzle()

@@ -19,23 +19,18 @@ class Puzzle7 : PuzzleTemplate(day = 7) {
         positions: List<Int>,
         costFunction: (list: List<Int>, pos: Int) -> Int,
     ): Int {
-        val sorted = positions.sorted()
-        val min = sorted[0]
-        val max = sorted[sorted.size - 1]
         var minCost = Integer.MAX_VALUE
         var timesIncreased = 0
-        for (position in min..max) {
-            val cost = costFunction(inputInts, position)
+        var position = 0
+        while (timesIncreased < 2) {
+            val cost = costFunction(positions, position)
             if (cost < minCost) {
                 minCost = cost
                 timesIncreased = 0
             } else {
                 timesIncreased++
             }
-            if (timesIncreased == 3) {
-                // No point for searching further if the rate is increasing
-                break
-            }
+            position++
         }
         return minCost
     }
