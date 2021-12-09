@@ -6,6 +6,7 @@ import day5.Puzzle5
 import day6.Puzzle6
 import day7.Puzzle7
 import day8.Puzzle8
+import day9.Puzzle9
 
 fun main() {
     listOf(
@@ -17,6 +18,7 @@ fun main() {
         Puzzle6(),
         Puzzle7(),
         Puzzle8(),
+        Puzzle9(),
     ).forEach {
         it.runPuzzle()
     }
