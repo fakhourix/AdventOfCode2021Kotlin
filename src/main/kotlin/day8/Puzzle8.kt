@@ -42,17 +42,17 @@ class Puzzle8 : PuzzleTemplate(day = 8) {
 
             val two = fiveDigits.first()
 
-            val numMap = HashMap<String, Int>()
-            numMap[zero] = 0
-            numMap[one] = 1
-            numMap[two] = 2
-            numMap[three] = 3
-            numMap[four] = 4
-            numMap[five] = 5
-            numMap[six] = 6
-            numMap[seven] = 7
-            numMap[eight] = 8
-            numMap[nine] = 9
+            val numMap = mapOf(
+                zero to 0,
+                one to 1,
+                two to 2,
+                three to 3,
+                four to 4,
+                five to 5,
+                six to 6,
+                seven to 7,
+                eight to 8,
+                nine to 9)
 
             output.map { numMap[it].toString() }.reduce { acc, s -> acc + s }.toInt()
         }.sum()
