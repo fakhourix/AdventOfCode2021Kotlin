@@ -13,34 +13,26 @@ class Puzzle8 : PuzzleTemplate(day = 8) {
 
     override fun puzzleTwo(answer: Int?.() -> Unit) {
         val sumOfOutputs = inputAsStrings.map { line ->
-            val splitted = line.split(" | ")
-            val nums = splitted[0].split(' ').map { it.sort() }
-            val output = splitted[1].split(' ').map { it.sort() }
-            val input = (nums + " " + output).map { it.sort() }.toMutableSet()
+            val parts = line.split(" | ")
+            val nums = parts[0].split(' ').map { it.sort() }
+            val output = parts[1].split(' ').map { it.sort() }
+            val input = (nums + " " + output).map { it.sort() }.toSet()
+
+            val sixSegments = input.filter { it.length == 6 }
+            val fiveSegments = input.filter { it.length == 5 }
 
             val one = input.first { it.length == 2 }
             val four = input.first { it.length == 4 }
             val seven = input.first { it.length == 3 }
             val eight = input.first { it.length == 7 }
 
-            val sixDigits = input.filter { it.length == 6 }.toMutableList()
-            val fiveDigits = input.filter { it.length == 5 }.toMutableList()
+            val nine = sixSegments.first { nine -> four.pluz(nine) == nine }
+            val six = sixSegments.first { six -> !six.contains(one[0]) || !six.contains(one[1]) }
+            val zero = sixSegments.first { it != six && it != nine }
 
-            val six = sixDigits.first { six -> !six.contains(one[0]) || !six.contains(one[1]) }
-            sixDigits.remove(six)
-
-            val zero = sixDigits.first { zero -> four.pluz(zero) == eight }
-            sixDigits.remove(zero)
-
-            val nine = sixDigits.first()
-
-            val five = fiveDigits.first { five -> one.pluz(five) == nine }
-            fiveDigits.remove(five)
-
-            val three = fiveDigits.first { three -> four.pluz(three) == nine }
-            fiveDigits.remove(three)
-
-            val two = fiveDigits.first()
+            val two = fiveSegments.first { two -> four.pluz(two) == eight }
+            val three = fiveSegments.first { three -> seven.pluz(three) == three }
+            val five = fiveSegments.first { five -> one.pluz(five) == nine }
 
             val numMap = mapOf(
                 zero to 0,
@@ -52,7 +44,8 @@ class Puzzle8 : PuzzleTemplate(day = 8) {
                 six to 6,
                 seven to 7,
                 eight to 8,
-                nine to 9)
+                nine to 9
+            )
 
             output.map { numMap[it].toString() }.reduce { acc, s -> acc + s }.toInt()
         }.sum()
