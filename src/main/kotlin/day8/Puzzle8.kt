@@ -26,18 +26,18 @@ class Puzzle8 : PuzzleTemplate(day = 8) {
             val sixDigits = input.filter { it.length == 6 }.toMutableList()
             val fiveDigits = input.filter { it.length == 5 }.toMutableList()
 
-            val six = sixDigits.first { !it.contains(one[0]) || !it.contains(one[1]) }
+            val six = sixDigits.first { six -> !six.contains(one[0]) || !six.contains(one[1]) }
             sixDigits.remove(six)
 
-            val zero = sixDigits.first { four.pluz(it) == eight }
+            val zero = sixDigits.first { zero -> four.pluz(zero) == eight }
             sixDigits.remove(zero)
 
             val nine = sixDigits.first()
 
-            val five = fiveDigits.first { one.pluz(it) == nine }
+            val five = fiveDigits.first { five -> one.pluz(five) == nine }
             fiveDigits.remove(five)
 
-            val three = fiveDigits.first { four.pluz(it) == nine }
+            val three = fiveDigits.first { three -> four.pluz(three) == nine }
             fiveDigits.remove(three)
 
             val two = fiveDigits.first()
