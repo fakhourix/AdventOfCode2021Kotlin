@@ -1,4 +1,5 @@
 import day1.Puzzle1
+import day10.Puzzle10
 import day2.Puzzle2
 import day3.Puzzle3
 import day4.Puzzle4
@@ -19,6 +20,7 @@ fun main() {
         Puzzle7(),
         Puzzle8(),
         Puzzle9(),
+        Puzzle10(),
     ).forEach {
         it.runPuzzle()
     }
