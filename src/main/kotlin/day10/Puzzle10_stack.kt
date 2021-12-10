@@ -2,60 +2,59 @@ package day10
 
 import PuzzleTemplate
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Puzzle10Stack : PuzzleTemplate(day = 10) {
 
     override fun puzzleOne(answer: Int?.() -> Unit) {
-        var sum = 0
-        inputAsStrings.forEach { line ->
+        val sum = inputAsStrings.map { line ->
             val stack = Stack<Char>()
+            var score = 0
             line.forEach { c ->
                 when {
-                    c.isAnOpening() -> stack.push(c)
+                    c.isOpening() -> stack.push(c)
                     else -> {
-                        if (stack.pop().getClosingFor() != c) {
-                            sum += c.getPoints()
+                        if (stack.pop().getClosure() != c) {
+                            score = c.getPoints()
                             return@forEach
                         }
                     }
                 }
             }
-        }
+            score
+        }.sum()
         answer(sum)
     }
 
     override fun puzzleTwoLong(answer: Long?.() -> Unit) {
-        var scores = ArrayList<Long>()
-        inputAsStrings.forEach { line ->
+        val scores = inputAsStrings.map { line ->
             var score: Long = 0
             val stack = Stack<Char>()
             var isCorrupted = false
             line.forEach { c ->
                 when {
-                    c.isAnOpening() -> stack.push(c)
+                    c.isOpening() -> stack.push(c)
                     else -> {
-                        if (stack.pop().getClosingFor() != c) {
+                        if (stack.pop().getClosure() != c) {
                             isCorrupted = true
                             return@forEach
                         }
                     }
                 }
             }
-            if (!isCorrupted) {
+            if (isCorrupted) 0
+            else {
                 while (stack.isNotEmpty())
-                    score = score * 5 + stack.pop().getClosingFor().getPoints2()
-                scores.add(score)
-                scores.sort()
+                    score = score * 5 + stack.pop().getClosure().getPoints2()
+                score
             }
-        }
+        }.filter { it > 0 }.sortedBy { it }
         answer(scores[scores.size / 2])
     }
 }
 
-private fun Char.isAnOpening() = listOf('(', '[', '{', '<').any { it == this }
+private fun Char.isOpening() = listOf('(', '[', '{', '<').any { it == this }
 
-private fun Char.getClosingFor() = when {
+private fun Char.getClosure() = when {
     this == '(' -> ')'
     this == '[' -> ']'
     this == '{' -> '}'
