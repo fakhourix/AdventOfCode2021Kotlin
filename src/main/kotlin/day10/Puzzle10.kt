@@ -1,61 +1,44 @@
 package day10
 
 import PuzzleTemplate
-import java.util.*
 
 class Puzzle10 : PuzzleTemplate(day = 10) {
 
+    private val validChunks = listOf("()", "[]", "{}", "<>")
+
     override fun puzzleOne(answer: Int?.() -> Unit) {
         val sum = inputAsStrings.map { line ->
-            val stack = Stack<Char>()
-            var points = 0
-            line.forEach { c ->
-                when {
-                    c.isAnOpening() -> stack.push(c)
-                    else -> {
-                        if (stack.pop().getClosingFor() != c) {
-                            points = c.getPoints()
-                            return@forEach
-                        }
-                    }
-                }
-            }
-            points
+            var input = line
+            while (validChunks.any { input.contains(it) })
+                validChunks.forEach { input = input.replace(it, "") }
+            if (input.all { it.isOpening() }) 0
+            else input.first { it.isClosure() }.getPoints()
         }.sum()
         answer(sum)
     }
 
     override fun puzzleTwoLong(answer: Long?.() -> Unit) {
         val scores = inputAsStrings.map { line ->
-            var score: Long = 0
-            val stack = Stack<Char>()
-            var isLineCorrupted = false
-            line.forEach { c ->
-                when {
-                    c.isAnOpening() -> stack.push(c)
-                    else ->
-                        if (stack.pop().getClosingFor() != c) {
-                            isLineCorrupted = true
-                            return@forEach
-                        }
+            var input = line
+            while (validChunks.any { input.contains(it) })
+                validChunks.forEach { input = input.replace(it, "") }
+            if (input.any { it.isClosure() }) 0
+            else {
+                var score = 0L
+                input.map { it.getClosure() }.reversed().joinToString("").forEach { c ->
+                    score = score * 5 + c.getPoints2()
                 }
-            }
-            when {
-                isLineCorrupted -> 0
-                else -> {
-                    while (stack.isNotEmpty())
-                        score = score * 5 + stack.pop().getClosingFor().getPoints2()
-                    score
-                }
+                score
             }
         }.filter { it > 0L }.sortedBy { it }
         answer(scores[scores.size / 2])
     }
 }
 
-private fun Char.isAnOpening() = listOf('(', '[', '{', '<').any { it == this }
+private fun Char.isClosure() = listOf(')', ']', '}', '>').any { it == this }
+private fun Char.isOpening() = listOf('(', '[', '{', '<').any { it == this }
 
-private fun Char.getClosingFor() = when {
+private fun Char.getClosure() = when {
     this == '(' -> ')'
     this == '[' -> ']'
     this == '{' -> '}'
