@@ -2,53 +2,53 @@ package day10
 
 import PuzzleTemplate
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Puzzle10 : PuzzleTemplate(day = 10) {
 
     override fun puzzleOne(answer: Int?.() -> Unit) {
-        var sum = 0
-        inputAsStrings.forEach { line ->
+        val sum = inputAsStrings.map { line ->
             val stack = Stack<Char>()
+            var points = 0
             line.forEach { c ->
                 when {
                     c.isAnOpening() -> stack.push(c)
                     else -> {
                         if (stack.pop().getClosingFor() != c) {
-                            sum += c.getPoints()
+                            points = c.getPoints()
                             return@forEach
                         }
                     }
                 }
             }
-        }
+            points
+        }.sum()
         answer(sum)
     }
 
     override fun puzzleTwoLong(answer: Long?.() -> Unit) {
-        var scores = ArrayList<Long>()
-        inputAsStrings.forEach { line ->
+        val scores = inputAsStrings.map { line ->
             var score: Long = 0
             val stack = Stack<Char>()
-            var isCorrupted = false
+            var isLineCorrupted = false
             line.forEach { c ->
                 when {
                     c.isAnOpening() -> stack.push(c)
-                    else -> {
+                    else ->
                         if (stack.pop().getClosingFor() != c) {
-                            isCorrupted = true
+                            isLineCorrupted = true
                             return@forEach
                         }
-                    }
                 }
             }
-            if (!isCorrupted) {
-                while (stack.isNotEmpty())
-                    score = score * 5 + stack.pop().getClosingFor().getPoints2()
-                scores.add(score)
-                scores.sort()
+            when {
+                isLineCorrupted -> 0
+                else -> {
+                    while (stack.isNotEmpty())
+                        score = score * 5 + stack.pop().getClosingFor().getPoints2()
+                    score
+                }
             }
-        }
+        }.filter { it > 0L }.sortedBy { it }
         answer(scores[scores.size / 2])
     }
 }
